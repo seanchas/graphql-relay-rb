@@ -1,5 +1,6 @@
 require 'graphql'
 require 'base64'
+require_relative 'node/global_id_field'
 require_relative 'node/plural'
 
 module Relay
@@ -46,31 +47,6 @@ module Relay
         type: type,
         id: id
       }
-    end
-
-
-    class GlobalIDFieldConfiguration < GraphQL::GraphQLFieldConfiguration
-      slot :type_name, String
-      slot :resolve_id, Proc
-    end
-
-    class GlobalIDField < GraphQL::GraphQLField
-      configure_with GlobalIDFieldConfiguration
-    end
-
-    class GraphQL::GraphQLObjectTypeConfiguration
-
-      def global_id_field(*args, &block)
-        configuration = GlobalIDField.new(*args) do
-          type GraphQL::GraphQLID
-          resolve lambda { |object|
-            Relay::Node.to_global_id(type_name, resolve_id.nil? ? object.id : resolve_id.call(object))
-          }
-        end
-        configuration.instance_eval(&block) if block_given?
-        field(configuration)
-      end
-
     end
 
   end
