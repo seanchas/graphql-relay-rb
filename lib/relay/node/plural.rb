@@ -1,9 +1,11 @@
 module Relay
   module Node
 
-    class PluralIdentifyingRootFieldConfiguration < GraphQL::GraphQLFieldConfiguration
+    class PluralIdentifyingRootFieldConfiguration < GraphQL::Configuration::Base
+      slot :name,                   String, coerce: -> (v) { v.to_s }
       slot :input_type,             GraphQL::GraphQLInputType
       slot :output_type,            GraphQL::GraphQLOutputType
+      slot :argument_name,          String, coerce: -> (v) { v.to_s }
       slot :resolve_single_input,   Proc
     end
 
@@ -11,7 +13,7 @@ module Relay
       configure_with PluralIdentifyingRootFieldConfiguration
 
       def args
-        @args ||= [GraphQL::GraphQLArgument.new(@configuration.name, ! + ! @configuration.input_type)]
+        @args ||= [GraphQL::GraphQLArgument.new(@configuration.argument_name, ! + ! @configuration.input_type)]
       end
 
       def type

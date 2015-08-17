@@ -15,8 +15,10 @@ RSpec.describe 'Relay Node Plural' do
     name 'Query'
 
     plural_identifying_root_field :usernames do
+      argument_name :usernames
       input_type    GraphQL::GraphQLString
       output_type   UserType
+
       resolve_single_input lambda { |username, *args|
         UserStruct.new(username, "www.facebook.com/#{username}")
       }
