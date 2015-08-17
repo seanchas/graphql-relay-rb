@@ -42,11 +42,7 @@ module Relay
     end
 
     def self.from_global_id(global_id)
-      type, id = Base64.strict_decode64(global_id).split(':')
-      {
-        type: type,
-        id: id
-      }
+      return Base64.strict_decode64(global_id).split(':')
     end
 
   end

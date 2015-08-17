@@ -17,13 +17,13 @@ module Relay
       }
 
       fetcher = lambda { |id, *args|
-        global_id = Relay::Node.from_global_id(id)
+        type, id = Relay::Node.from_global_id(id)
 
-        case global_id[:type]
+        case type
         when 'User'
-          Users[global_id[:id]]
+          Users[id]
         when 'Photo'
-          Photos[global_id[:id]]
+          Photos[id]
         end
       }
 
