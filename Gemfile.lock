@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:seanchas/graphql.git
-  revision: 5e9073a7d90f86f7968003b16018e0365889581b
+  revision: b1df6adc4f2703cc9a749f3362ca4ca26f63a06d
   specs:
     graphql (0.0.1)
       celluloid
@@ -88,3 +88,6 @@ DEPENDENCIES
   rake
   relay!
   rspec
+
+BUNDLED WITH
+   1.10.6
