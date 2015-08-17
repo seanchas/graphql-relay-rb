@@ -59,10 +59,11 @@ RSpec.describe 'Relay Connection' do
       query FriendsQuery {
         user {
           name
-          friends(first: 2) {
+          friends(first: 2, after: "YXJyYXljb25uZWN0aW9uOjA=") {
             total_count
             edges {
               friendship_time
+              cursor
               node {
                 name
               }
