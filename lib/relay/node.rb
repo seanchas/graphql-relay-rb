@@ -1,7 +1,7 @@
 require 'graphql'
 require 'base64'
 require_relative 'node/global_id_field'
-require_relative 'node/plural'
+require_relative 'node/plural_identifying_root_field'
 
 module Relay
 

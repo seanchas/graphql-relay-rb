@@ -3,33 +3,33 @@ require 'graphql'
 module Relay
 
 
-  class GlobalIDFieldConfiguration < GraphQL::GraphQLFieldConfiguration
-    slot :type_name, String
-    slot :resolve_id, Proc, null: true
-  end
+  GLOBAL_ID_FIELD_DEFAULT_RESOLVE = -> (object) { object.id }
 
-
-  class GlobalIDField < GraphQL::GraphQLField
-    configure_with GlobalIDFieldConfiguration
+  class GlobalIDFieldConfiguration < GraphQL::Configuration::Base
+    slot :name,       String, coerce: -> (v) { v.to_s }
+    slot :type_name,  String, coerce: -> (v) { v.to_s }
+    slot :resolve_id, Proc,   null: true
   end
 
 
   class GraphQL::GraphQLObjectTypeConfiguration
 
-    GLOBAL_ID_FIELD_DEFAULT_RESOLVE = -> (object) { object.id }
-
     def global_id_field(*args, &block)
       configuration = GlobalIDFieldConfiguration.new(*args, &block)
 
-      configuration.instance_eval do
-        type GraphQL::GraphQLID
+      resolve_id = configuration.resolve_id || GLOBAL_ID_FIELD_DEFAULT_RESOLVE
+
+      global_id_field = GraphQL::GraphQLField.new do
+        name configuration.name
+
+        type !GraphQL::GraphQLID
 
         resolve lambda { |object|
-          Relay::Node.to_global_id(type_name, (resolve_id || GLOBAL_ID_FIELD_DEFAULT_RESOLVE).call(object))
+          Relay::Node.to_global_id(configuration.type_name, resolve_id.call(object))
         }
       end
 
-      field(GlobalIDField.new(configuration))
+      field(global_id_field)
     end
 
   end
