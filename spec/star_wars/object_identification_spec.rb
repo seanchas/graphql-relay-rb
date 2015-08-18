@@ -15,16 +15,17 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      rebels: {
-        id: 'RmFjdGlvbjox',
-        name: 'Alliance to Restore the Republic'
+      data: {
+        rebels: {
+          id: 'RmFjdGlvbjox',
+          name: 'Alliance to Restore the Republic'
+        }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
   it "Should correctly refetch the rebels" do
@@ -41,16 +42,17 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      node: {
-        id: 'RmFjdGlvbjox',
-        name: 'Alliance to Restore the Republic'
+      data: {
+        node: {
+          id: 'RmFjdGlvbjox',
+          name: 'Alliance to Restore the Republic'
+        }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
 
@@ -66,16 +68,17 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      empire: {
-        id: 'RmFjdGlvbjoy',
-        name: 'Galactic Empire'
+      data: {
+        empire: {
+          id: 'RmFjdGlvbjoy',
+          name: 'Galactic Empire'
+        }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
 
@@ -93,16 +96,17 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      node: {
-        id: 'RmFjdGlvbjoy',
-        name: 'Galactic Empire'
+      data: {
+        node: {
+          id: 'RmFjdGlvbjoy',
+          name: 'Galactic Empire'
+        }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
   it "Should correctly refetch the X-Wing" do
@@ -119,16 +123,17 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      node: {
-        id: 'U2hpcDox',
-        name: 'X-Wing'
+      data: {
+        node: {
+          id: 'U2hpcDox',
+          name: 'X-Wing'
+        }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
 end

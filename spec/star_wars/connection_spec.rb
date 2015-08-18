@@ -20,24 +20,25 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      rebels: {
-        name: 'Alliance to Restore the Republic',
-        ships: {
-          edges: [
-            {
-              node: {
-                name: 'X-Wing'
+      data: {
+        rebels: {
+          name: 'Alliance to Restore the Republic',
+          ships: {
+            edges: [
+              {
+                node: {
+                  name: 'X-Wing'
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
   it "Should correctly fetch first 2 ships of the rebels with a cursor" do
@@ -58,31 +59,32 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      rebels: {
-        name: 'Alliance to Restore the Republic',
-        ships: {
-          edges: [
-            {
-              cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-              node: {
-                name: 'X-Wing'
+      data: {
+        rebels: {
+          name: 'Alliance to Restore the Republic',
+          ships: {
+            edges: [
+              {
+                cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                node: {
+                  name: 'X-Wing'
+                }
+              },
+              {
+                cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                node: {
+                  name: 'Y-Wing'
+                }
               }
-            },
-            {
-              cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
-              node: {
-                name: 'Y-Wing'
-              }
-            }
-          ]
+            ]
+          }
         }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
   it "Should correctly fetch next 3 ships of the rebels with a cursor" do
@@ -103,35 +105,36 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      rebels: {
-        name: 'Alliance to Restore the Republic',
-        ships: {
-          edges: [
-            {
-              cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
-              node: {
-                name: 'A-Wing'
+      data: {
+        rebels: {
+          name: 'Alliance to Restore the Republic',
+          ships: {
+            edges: [
+              {
+                cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
+                node: {
+                  name: 'A-Wing'
+                }
+              }, {
+                cursor: 'YXJyYXljb25uZWN0aW9uOjM=',
+                node: {
+                  name: 'Millenium Falcon'
+                }
+              }, {
+                cursor: 'YXJyYXljb25uZWN0aW9uOjQ=',
+                node: {
+                  name: 'Home One'
+                }
               }
-            }, {
-              cursor: 'YXJyYXljb25uZWN0aW9uOjM=',
-              node: {
-                name: 'Millenium Falcon'
-              }
-            }, {
-              cursor: 'YXJyYXljb25uZWN0aW9uOjQ=',
-              node: {
-                name: 'Home One'
-              }
-            }
-          ]
+            ]
+          }
         }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
   it "Should correctly fetch no ships at the end of the connection" do
@@ -152,18 +155,19 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      rebels: {
-        name: 'Alliance to Restore the Republic',
-        ships: {
-          edges: []
+      data: {
+        rebels: {
+          name: 'Alliance to Restore the Republic',
+          ships: {
+            edges: []
+          }
         }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 
 
@@ -197,50 +201,51 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      rebels: {
-        name:'Alliance to Restore the Republic',
-        originalShips: {
-          edges: [
-            {
-              node: {
-                name: 'X-Wing'
+      data: {
+        rebels: {
+          name:'Alliance to Restore the Republic',
+          originalShips: {
+            edges: [
+              {
+                node: {
+                  name: 'X-Wing'
+                }
+              }, {
+                node: {
+                  name: 'Y-Wing'
+                }
               }
-            }, {
-              node: {
-                name: 'Y-Wing'
-              }
+            ],
+            pageInfo: {
+              hasNextPage: true
             }
-          ],
-          pageInfo: {
-            hasNextPage: true
-          }
-        },
-        moreShips: {
-          edges: [
-            {
-              node: {
-                name: 'A-Wing'
+          },
+          moreShips: {
+            edges: [
+              {
+                node: {
+                  name: 'A-Wing'
+                }
+              }, {
+                node: {
+                  name: 'Millenium Falcon'
+                }
+              },{
+                node: {
+                  name: 'Home One'
+                }
               }
-            }, {
-              node: {
-                name: 'Millenium Falcon'
-              }
-            },{
-              node: {
-                name: 'Home One'
-              }
+            ],
+            pageInfo: {
+              hasNextPage: false
             }
-          ],
-          pageInfo: {
-            hasNextPage: false
           }
         }
       }
     }
 
-    document = GraphQL::Language.parse(query)
-    executor = GraphQL::Executor.new(document, StarWars::Schema)
+    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
 
-    expect(executor.execute({})).to eql(expectation)
+    expect(result).to eql(expectation)
   end
 end
