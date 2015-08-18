@@ -5,7 +5,7 @@ require 'relay/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = 'relay'
+  s.name        = 'relay-rb'
   s.version     = Relay::VERSION
   s.authors     = ['Eugene Kovalev']
   s.email       = ['seanchas@gmail.com']
@@ -18,4 +18,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
+
+  s.add_runtime_dependency 'graphql-rb'
 end
