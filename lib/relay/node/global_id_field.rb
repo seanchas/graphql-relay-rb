@@ -19,7 +19,7 @@ module Relay
 
       resolve_id = configuration.resolve_id || GLOBAL_ID_FIELD_DEFAULT_RESOLVE
 
-      global_id_field = GraphQL::GraphQLField.new do
+      global_id_field = GraphQL::GraphQLFieldConfiguration.new do
         name configuration.name
 
         type !GraphQL::GraphQLID

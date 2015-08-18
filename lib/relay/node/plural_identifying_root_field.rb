@@ -14,7 +14,7 @@ module Relay
       def plural_identifying_root_field(*args, &block)
         configuration = PluralIdentifyingRootFieldConfiguration.new(*args, &block)
 
-        plural_identifying_root_field = GraphQL::GraphQLField.new do
+        plural_identifying_root_field = GraphQL::GraphQLFieldConfiguration.new do
           name configuration.name
 
           type +configuration.output_type
