@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:seanchas/graphql.git
-  revision: 798516cc5b3ad42c4ed27ff73b84264258fe258e
+  revision: 334afe05dc765b3c557959de8d95717559442e63
   specs:
     graphql (0.0.1)
       celluloid

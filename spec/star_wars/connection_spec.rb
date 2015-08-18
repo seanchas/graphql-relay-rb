@@ -20,13 +20,13 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      'rebels' => {
-        'name'  => 'Alliance to Restore the Republic',
-        'ships' => {
-          'edges' => [
+      rebels: {
+        name: 'Alliance to Restore the Republic',
+        ships: {
+          edges: [
             {
-              'node' => {
-                'name' => 'X-Wing'
+              node: {
+                name: 'X-Wing'
               }
             }
           ]
@@ -58,20 +58,20 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      'rebels' => {
-        'name'  => 'Alliance to Restore the Republic',
-        'ships' => {
-          'edges' => [
+      rebels: {
+        name: 'Alliance to Restore the Republic',
+        ships: {
+          edges: [
             {
-              'cursor'  => 'YXJyYXljb25uZWN0aW9uOjA=',
-              'node'    => {
-                'name' => 'X-Wing'
+              cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+              node: {
+                name: 'X-Wing'
               }
             },
             {
-              'cursor'  => 'YXJyYXljb25uZWN0aW9uOjE=',
-              'node'    => {
-                'name' => 'Y-Wing'
+              cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+              node: {
+                name: 'Y-Wing'
               }
             }
           ]
@@ -103,26 +103,26 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      'rebels' => {
-        'name'  => 'Alliance to Restore the Republic',
-        'ships' => {
-          'edges' => [
+      rebels: {
+        name: 'Alliance to Restore the Republic',
+        ships: {
+          edges: [
             {
-              'cursor'  => 'YXJyYXljb25uZWN0aW9uOjI=',
-              'node'    => {
-                'name' => 'A-Wing'
+              cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
+              node: {
+                name: 'A-Wing'
               }
             }, {
-              'cursor'  => 'YXJyYXljb25uZWN0aW9uOjM=',
-              'node'    => {
-                'name' => 'Millenium Falcon'
+              cursor: 'YXJyYXljb25uZWN0aW9uOjM=',
+              node: {
+                name: 'Millenium Falcon'
               }
             }, {
-              'cursor'  => 'YXJyYXljb25uZWN0aW9uOjQ=',
-              'node'    => {
-                'name' => 'Home One'
+              cursor: 'YXJyYXljb25uZWN0aW9uOjQ=',
+              node: {
+                name: 'Home One'
               }
-            },
+            }
           ]
         }
       }
@@ -152,10 +152,10 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      'rebels' => {
-        'name'  => 'Alliance to Restore the Republic',
-        'ships' => {
-          'edges' => []
+      rebels: {
+        name: 'Alliance to Restore the Republic',
+        ships: {
+          edges: []
         }
       }
     }
@@ -197,42 +197,42 @@ RSpec.describe "Star Wars connection" do
     )
 
     expectation = {
-      'rebels' => {
-        'name'  => 'Alliance to Restore the Republic',
-        'originalShips' => {
-          'edges' => [
+      rebels: {
+        name:'Alliance to Restore the Republic',
+        originalShips: {
+          edges: [
             {
-              'node'    => {
-                'name' => 'X-Wing'
+              node: {
+                name: 'X-Wing'
               }
             }, {
-              'node'    => {
-                'name' => 'Y-Wing'
+              node: {
+                name: 'Y-Wing'
               }
             }
           ],
-          'pageInfo' => {
-            'hasNextPage' => true
+          pageInfo: {
+            hasNextPage: true
           }
         },
-        'moreShips' => {
-          'edges' => [
+        moreShips: {
+          edges: [
             {
-              'node'    => {
-                'name' => 'A-Wing'
+              node: {
+                name: 'A-Wing'
               }
             }, {
-              'node'    => {
-                'name' => 'Millenium Falcon'
+              node: {
+                name: 'Millenium Falcon'
               }
             },{
-              'node'    => {
-                'name' => 'Home One'
+              node: {
+                name: 'Home One'
               }
             }
           ],
-          'pageInfo' => {
-            'hasNextPage' => false
+          pageInfo: {
+            hasNextPage: false
           }
         }
       }

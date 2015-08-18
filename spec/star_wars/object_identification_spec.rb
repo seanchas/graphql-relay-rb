@@ -15,9 +15,9 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      'rebels' => {
-        'id'    => 'RmFjdGlvbjox',
-        'name'  => 'Alliance to Restore the Republic'
+      rebels: {
+        id: 'RmFjdGlvbjox',
+        name: 'Alliance to Restore the Republic'
       }
     }
 
@@ -41,9 +41,9 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      'node' => {
-        'id'    => 'RmFjdGlvbjox',
-        'name'  => 'Alliance to Restore the Republic'
+      node: {
+        id: 'RmFjdGlvbjox',
+        name: 'Alliance to Restore the Republic'
       }
     }
 
@@ -66,9 +66,9 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      'empire' => {
-        'id'    => 'RmFjdGlvbjoy',
-        'name'  => 'Galactic Empire'
+      empire: {
+        id: 'RmFjdGlvbjoy',
+        name: 'Galactic Empire'
       }
     }
 
@@ -93,9 +93,9 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      'node' => {
-        'id'    => 'RmFjdGlvbjoy',
-        'name'  => 'Galactic Empire'
+      node: {
+        id: 'RmFjdGlvbjoy',
+        name: 'Galactic Empire'
       }
     }
 
@@ -119,9 +119,9 @@ RSpec.describe "Star Wars object identification" do
     )
 
     expectation = {
-      'node' => {
-        'id'    => 'U2hpcDox',
-        'name'  => 'X-Wing'
+      node: {
+        id: 'U2hpcDox',
+        name: 'X-Wing'
       }
     }
 
