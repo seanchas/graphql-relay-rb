@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/seanchas/relay-rb'
   s.summary     = 'Summary of Relay Ruby.'
   s.description = 'Description of Relay Ruby.'
+  s.license     = 'MIT'
 
   s.files       = Dir['{lib}/**/*', 'Rakefile']
   s.test_files  = Dir['spec/**/*']
