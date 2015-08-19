@@ -10,48 +10,6 @@ module Relay
       GraphQL::GraphQLArgument.new(:last, GraphQL::GraphQLInt)
     ]
 
-    class ConnectionConfiguration < GraphQL::Configuration::Base
-      slot :name,               String
-      slot :node_type,          GraphQL::GraphQLObjectType
-      slot :edge_fields,       [GraphQL::GraphQLField], singular: :edge_field
-      slot :connection_fields, [GraphQL::GraphQLField], singular: :connection_field
-    end
-
-    def self.connection_definitions(configuration)
-      name, node_type = configuration.name, configuration.node_type
-
-      edge_type = GraphQL::GraphQLObjectType.new do
-        name        name + 'Edge'
-        description 'An edge in a connection'
-
-        field :node, node_type do
-          description 'The item at the end of the edge'
-        end
-
-        field :cursor, ! GraphQL::GraphQLString do
-          description 'A cursor for use in pagination'
-        end
-
-        fields configuration.edge_fields
-      end
-
-      connection_type = GraphQL::GraphQLObjectType.new do
-        name          name + 'Connection'
-        description   'A connection to a list of items.'
-
-        field :pageInfo, !PageInfoType do
-          description 'Information to aid in pagination.'
-        end
-
-        field :edges, +edge_type do
-          description 'Information to aid in pagination.'
-        end
-
-        fields configuration.connection_fields
-      end
-
-      return edge_type, connection_type
-    end
 
     PageInfoType = GraphQL::GraphQLObjectType.new do
       name          'PageInfo'
@@ -73,6 +31,52 @@ module Relay
         description 'When paginating forwards, the cursor to continue.'
       end
     end
+
+
+    class CompositeTypeConfiguration < GraphQL::Configuration::Base
+      slot :name,               String
+      slot :node_type,          GraphQL::GraphQLObjectType
+      slot :edge_fields,       [GraphQL::GraphQLField], singular: :edge_field
+      slot :connection_fields, [GraphQL::GraphQLField], singular: :connection_field
+    end
+
+
+    class CompositeType < GraphQL::Configuration::Configurable
+      configure_with CompositeTypeConfiguration
+
+      def connection
+        @connection ||= GraphQL::GraphQLObjectType.new(connection_arguments)
+      end
+
+      def edge_type
+        @edge_type ||= GraphQL::GraphQLObjectType.new(edge_type_arguments)
+      end
+
+      private
+
+      def connection_arguments
+        {
+          name:         name + 'Connection',
+          description:  'A connection to a list of items.',
+          fields: @configuration.connection_fields.concat([
+            { name: 'pageInfo', type: !PageInfoType,  description: 'Information to aid in pagination.' },
+            { name: 'edges',    type: +edge_type,     description: 'Information to aid in pagination.' }
+          ])
+        }
+      end
+
+      def edge_type_arguments
+        {
+          name: name + 'Edge',
+          description: 'An edge in a connection.',
+          fields: @configuration.edge_fields.concat([
+            { name: :node,    type: @configuration.node_type, description: 'The item at the end of the edge.' },
+            { name: :cursor,  type: !GraphQL::GraphQLString,  description: 'A cursor for use in pagination.'  }
+          ])
+        }
+      end
+    end
+
 
   end
 end
