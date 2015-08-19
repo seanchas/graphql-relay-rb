@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    relay-rb (0.0.2)
+    relay-rb (0.0.3)
       graphql-rb
 
 GEM
