@@ -36,7 +36,7 @@ module Relay
         end
       }
 
-      definitions = Relay::Node.definitions(fetcher, resolver)
+      definitions = Relay::Node::CompositeType.new(fetch_object: fetcher, resolve_type: resolver)
 
       UserType = GraphQL::GraphQLObjectType.new do
         name 'User'
@@ -45,7 +45,7 @@ module Relay
 
         field :name,    GraphQL::GraphQLString
 
-        interface definitions[:interface]
+        interface definitions.interface
       end
 
       PhotoType = GraphQL::GraphQLObjectType.new do
@@ -55,15 +55,15 @@ module Relay
 
         field :width,   GraphQL::GraphQLInt
 
-        interface definitions[:interface]
+        interface definitions.interface
       end
 
       QueryType = GraphQL::GraphQLObjectType.new do
         name 'Query'
 
-        field definitions[:field]
+        field definitions.field
 
-        field :all, + definitions[:interface] do
+        field :all, + definitions.interface do
           resolve lambda { |*args|
             Users.values.concat(Photos.values)
           }

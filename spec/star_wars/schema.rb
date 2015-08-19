@@ -4,12 +4,17 @@ require_relative 'data'
 
 module StarWars
 
+  NodeComposite = Relay::Node::CompositeType.new do
 
-  NodeInterface = GraphQL::GraphQLInterfaceType.new do
-    name          'NodeInterface'
-    description   'An object with id.'
-
-    field :id, ! GraphQL::GraphQLID, description: 'The id of the object.'
+    fetch_object lambda { |global_id, context|
+      type, id = Relay::Node.from_global_id(global_id)
+      case type
+      when 'Faction'
+        Data.faction(id.to_i)
+      when 'Ship'
+        Data.ship(id.to_i)
+      end
+    }
 
     resolve_type lambda { |object|
       case object
@@ -17,33 +22,9 @@ module StarWars
         FactionType
       when Data::Ship
         ShipType
-      else
-        nil
       end
     }
-  end
 
-
-  NodeField = GraphQL::GraphQLField.new do
-    name          'node'
-    description   'Fetches an object given its global id.'
-    type          NodeInterface
-
-    arg :id, ! GraphQL::GraphQLID, description: 'The global id of the object.'
-
-    resolve lambda { |object, params, context|
-      type, id  = Relay::Node.from_global_id(params[:id])
-      id        = id.to_i
-
-      case type
-      when 'Faction'
-        Data.faction(id)
-      when 'Ship'
-        Data.ship(id)
-      else
-        nil
-      end
-    }
   end
 
 
@@ -73,7 +54,7 @@ module StarWars
 
     field :name, GraphQL::GraphQLString, description: 'The name of the ship.'
 
-    interface NodeInterface
+    interface NodeComposite.interface
   end
 
 
@@ -93,7 +74,7 @@ module StarWars
       }
     end
 
-    interface NodeInterface
+    interface NodeComposite.interface
   end
 
 
@@ -104,7 +85,7 @@ module StarWars
 
     field :empire, FactionType, resolve: -> { Data.empire }
 
-    field NodeField
+    field NodeComposite.field
   end
 
 
