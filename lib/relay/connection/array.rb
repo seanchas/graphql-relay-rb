@@ -11,6 +11,12 @@ module Relay
     EmptyConnection = ArrayConnection.new([], PageInfo.new(nil, nil, false, false))
 
     def self.connection_from_array(data, args)
+      return EmptyConnection if data.nil?
+
+      return GraphQL::Execution::Pool.future do
+        connection_from_array(data.value, args)
+      end if data.is_a?(Celluloid::Future)
+
       edges   = data.each_with_index.map { |item, i| Edge.new(offset_to_cursor(i), item) }
 
       start   = [get_offset(args[:after], -1), -1].max + 1
