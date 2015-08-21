@@ -51,7 +51,7 @@ GEM
       timers (~> 4.0.0)
     diff-lcs (1.2.5)
     dotenv (2.0.2)
-    graphql-rb (0.0.5)
+    graphql-rb (0.0.7)
       celluloid
       parslet
     hitimes (1.2.2)
@@ -83,6 +83,3 @@ DEPENDENCIES
   rake
   relay-rb!
   rspec
-
-BUNDLED WITH
-   1.10.6
