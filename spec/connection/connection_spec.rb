@@ -74,9 +74,7 @@ RSpec.describe 'Relay Connection' do
 
 
   it "Should include connections and edge fields" do
-    document = GraphQL::Language.parse(q1)
-    executor = GraphQL::Executor.new(document, ConnectionSchema)
-    puts executor.execute({})
+    puts GraphQL::graphql(ConnectionSchema, q1)
   end
 
 

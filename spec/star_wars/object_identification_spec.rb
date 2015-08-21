@@ -23,7 +23,7 @@ RSpec.describe "Star Wars object identification" do
       }
     }
 
-    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
+    result = GraphQL::graphql(StarWars::Schema, query)
 
     expect(result).to eql(expectation)
   end
@@ -50,7 +50,7 @@ RSpec.describe "Star Wars object identification" do
       }
     }
 
-    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
+    result = GraphQL::graphql(StarWars::Schema, query)
 
     expect(result).to eql(expectation)
   end
@@ -76,7 +76,7 @@ RSpec.describe "Star Wars object identification" do
       }
     }
 
-    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
+    result = GraphQL::graphql(StarWars::Schema, query)
 
     expect(result).to eql(expectation)
   end
@@ -104,7 +104,7 @@ RSpec.describe "Star Wars object identification" do
       }
     }
 
-    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
+    result = GraphQL::graphql(StarWars::Schema, query)
 
     expect(result).to eql(expectation)
   end
@@ -131,7 +131,7 @@ RSpec.describe "Star Wars object identification" do
       }
     }
 
-    result = GraphQL::graphql(StarWars::Schema, query, {}, {})
+    result = GraphQL::graphql(StarWars::Schema, query)
 
     expect(result).to eql(expectation)
   end

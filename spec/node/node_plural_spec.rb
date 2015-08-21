@@ -43,9 +43,7 @@ RSpec.describe 'Relay Node Plural' do
   end
 
   it "Should allow fetching" do
-    document = GraphQL::Language.parse(q1)
-    executor = GraphQL::Executor.new(document, Schema)
-    puts executor.execute({})
+    puts GraphQL::graphql(Schema, q1)
   end
 
 end
