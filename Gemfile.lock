@@ -1,8 +1,15 @@
+GIT
+  remote: git@github.com:seanchas/graphql-rb.git
+  revision: 8bfda7d75633d98c93d393e901fbe7db645f4e29
+  specs:
+    graphql-rb (0.0.8)
+      celluloid
+      parslet
+
 PATH
   remote: .
   specs:
     relay-rb (0.0.4)
-      graphql-rb
 
 GEM
   remote: https://rubygems.org/
@@ -51,9 +58,6 @@ GEM
       timers (>= 4.1.1)
     diff-lcs (1.2.5)
     dotenv (2.0.2)
-    graphql-rb (0.0.8)
-      celluloid
-      parslet
     hitimes (1.2.2)
     nenv (0.2.0)
     parslet (1.7.0)
@@ -80,6 +84,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  graphql-rb!
   rake
   relay-rb!
   rspec
