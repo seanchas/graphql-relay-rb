@@ -3,13 +3,17 @@ require_relative 'array'
 module Relay
   module Connection
 
-    ConnectionArguments = [
-      GraphQL::GraphQLArgument.new(:before, GraphQL::GraphQLString),
+    ForwardConnectionArguments = [
       GraphQL::GraphQLArgument.new(:after, GraphQL::GraphQLString),
-      GraphQL::GraphQLArgument.new(:first, GraphQL::GraphQLInt),
+      GraphQL::GraphQLArgument.new(:first, GraphQL::GraphQLInt)
+    ]
+
+    BackwardConnectionArguments = [
+      GraphQL::GraphQLArgument.new(:before, GraphQL::GraphQLString),
       GraphQL::GraphQLArgument.new(:last, GraphQL::GraphQLInt)
     ]
 
+    ConnectionArguments = ForwardConnectionArguments.concat(BackwardConnectionArguments)
 
     PageInfoType = GraphQL::GraphQLObjectType.new do
       name          'PageInfo'
