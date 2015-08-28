@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:seanchas/graphql-rb.git
+  remote: https://github.com/seanchas/graphql-rb.git
   revision: 8bfda7d75633d98c93d393e901fbe7db645f4e29
   specs:
     graphql-rb (0.0.8)
@@ -60,7 +60,7 @@ GEM
     dotenv (2.0.2)
     hitimes (1.2.2)
     nenv (0.2.0)
-    parslet (1.7.0)
+    parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
     rake (10.4.2)
     rspec (3.3.0)

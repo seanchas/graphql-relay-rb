@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'graphql-rb', git: 'git@github.com:seanchas/graphql-rb.git'
+gem 'graphql-rb', git: 'https://github.com/seanchas/graphql-rb.git'
 
 gemspec
