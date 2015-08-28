@@ -14,13 +14,13 @@ RSpec.describe 'Relay Connection' do
 
   FriendConnection = Relay::Connection::CompositeType.new do
     name        'Friend'
-    node_type   -> { ConnectionUserType }
+    nodeType   -> { ConnectionUserType }
 
-    edge_field :friendship_time, GraphQL::GraphQLString do
+    edgeField :friendship_time, GraphQL::GraphQLString do
       resolve -> { 'Yesterday' }
     end
 
-    connection_field :total_count, GraphQL::GraphQLInt do
+    connectionField :total_count, GraphQL::GraphQLInt do
       resolve -> { Users.size }
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe 'Relay Connection' do
     field :name, GraphQL::GraphQLString
 
     field :friends do
-      type FriendConnection.connection
+      type FriendConnection.connectionType
       args Relay::Connection::ConnectionArguments
       resolve lambda { |user, params|
         Relay::Connection.connection_from_array(Users, params)
