@@ -70,7 +70,7 @@ module StarWars
       args  Relay::Connection::ConnectionArguments
       resolve lambda { |faction, params|
         ships = faction.ships.map { |id| Data.ship(id) }
-        Relay::Connection.connection_from_array(ships, params)
+        Relay::Connection.fromArray(ships, params)
       }
     end
 

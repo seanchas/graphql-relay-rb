@@ -21,7 +21,7 @@ RSpec.describe 'Relay Connection' do
     end
 
     connectionField :total_count, GraphQL::GraphQLInt do
-      resolve -> { Users.size }
+      resolve -> (connection) { connection.size }
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe 'Relay Connection' do
       type FriendConnection.connectionType
       args Relay::Connection::ConnectionArguments
       resolve lambda { |user, params|
-        Relay::Connection.connection_from_array(Users, params)
+        Relay::Connection.fromArray(Users, params)
       }
     end
   end

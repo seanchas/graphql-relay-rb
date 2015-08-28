@@ -7,24 +7,49 @@ module Relay
 
     Edge            = Struct.new('Edge', :cursor, :node)
     PageInfo        = Struct.new('PageInfo', :startCursor, :endCursor, :hasPreviousPage, :hasNextPage)
-    ArrayConnection = Struct.new('ArrayConnection', :edges, :pageInfo)
-    EmptyConnection = ArrayConnection.new([], PageInfo.new(nil, nil, false, false))
+    EmptyPageInfo   = PageInfo.new(nil, nil, false, false)
 
-    def self.connection_from_array(data, args)
-      return EmptyConnection if data.nil?
+    ArrayConnection = Struct.new('ArrayConnection', :data, :edges, :pageInfo) do
 
+      def empty?
+        data.empty?
+      end
+
+      def size
+        data.size
+      end
+
+      def data
+        self[:data]       || []
+      end
+
+      def edges
+        self[:edges]      || []
+      end
+
+      def pageInfo
+        self[:pageInfo]   || EmptyPageInfo
+      end
+
+    end
+
+    def self.fromArray(data, args)
       return GraphQL::Execution::Pool.future do
-        connection_from_array(data.value, args)
+        fromArray(data.value, args)
       end if data.is_a?(Celluloid::Future)
 
-      edges   = data.each_with_index.map { |item, i| Edge.new(offset_to_cursor(i), item) }
+      connection    = ArrayConnection.new(data)
+
+      return connection if connection.empty?
+
+      edges   = connection.data.each_with_index.map { |item, i| Edge.new(offset_to_cursor(i), item) }
 
       start   = [get_offset(args[:after], -1), -1].max + 1
       finish  = [get_offset(args[:before], edges.size + 1), edges.size + 1].min
 
       edges = edges.slice(start, finish)
 
-      return EmptyConnection if edges.size == 0
+      return connection if edges.size == 0
 
       first_preslice_cursor = edges.first[:cursor]
       last_preslice_cursor  = edges.last[:cursor]
@@ -32,14 +57,17 @@ module Relay
       edges = edges.slice(0, args[:first]) unless args[:first].nil?
       egdes = edges.slice!(- args[:last], edges.size) unless args[:last].nil?
 
-      return EmptyConnection if edges.size == 0
+      return connection if edges.size == 0
 
-      ArrayConnection.new(edges, PageInfo.new(
+      connection.edges    = edges
+      connection.pageInfo = PageInfo.new(
         edges.first[:cursor],
         edges.last[:cursor],
         edges.first[:cursor]  != first_preslice_cursor,
         edges.last[:cursor]   != last_preslice_cursor
-      ))
+      )
+
+      connection
     end
 
     def self.offset_to_cursor(index)
